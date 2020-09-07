@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Virtual Drum Kit</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+   <div id="bg-img">
+   	<h1>Virtual Drum Kit</h1>
+   	<ul id="keyall">
+   		<li id="keya">
+   			A<span>CLAP</span>
+   		</li>
+   		<li id="keys">
+   			S<span>HIHAT</span>
+   		</li>
+   		<li id="keyd">
+   			D<span>KICK</span>
+   		</li>
+   		<li id="keyf">
+   			F<span>OPENHAT</span>
+   		</li>
+   		<li id="keyg">
+   			G<span>BOOM</span>
+   		</li>
+   		<li id="keyh">
+   			H<span>RIDE</span>
+   		</li>
+   		<li id="keyj">
+   			J<span>SNARE</span>
+   		</li>
+   		<li id="keyk">
+   			K<span>TOM</span>
+   		</li>
+   		<li id="keyl">
+   			L<span>TINK</span>
+   		</li>
+   	</ul>
+   	<div id="buttons">
+   		<div class="button"></div>
+   		<div class="button" onclick="playrecording()"></div>
+   	</div>
+   </div>
+   <audio id="a" src="sounds/clap.wav"></audio>
+   <audio id="s" src="sounds/hihat.wav"></audio>
+   <audio id="d" src="sounds/kick.wav"></audio>
+   <audio id="f" src="sounds/openhat.wav"></audio>
+   <audio id="g" src="sounds/boom.wav"></audio>
+   <audio id="h" src="sounds/ride.wav"></audio>
+   <audio id="j" src="sounds/snare.wav"></audio>
+   <audio id="k" src="sounds/tom.wav"></audio>
+   <audio id="l" src="sounds/tink.wav"></audio>
+   <script type="text/javascript">
+   	window.addEventListener('keydown',playsound);
+      function playsound(e){element=document.getElementById(`key${e.key}`);
+   		element.classList.toggle("playing",true);
+        audio=document.getElementById(`${e.key}`);
+   		audio.currentTime=0;
+   		audio.play();
+   		setTimeout(function(){document.getElementById(`keya`).classList.remove("playing");
+    	document.getElementById(`keyl`).classList.remove("playing");
+        document.getElementById(`keys`).classList.remove("playing");
+        document.getElementById(`keyd`).classList.remove("playing");
+        document.getElementById(`keyf`).classList.remove("playing");
+        document.getElementById(`keyg`).classList.remove("playing");
+        document.getElementById(`keyh`).classList.remove("playing");
+        document.getElementById(`keyj`).classList.remove("playing");
+        document.getElementById(`keyk`).classList.remove("playing");},70);
+   	}
+
+   	function playrecording(){
+   		notes=["a","s","d","f","g","h","j","k","l"];
+   		for(var i=0;i<notes.length;i++)
+   		{
+   		  delay(notes[i],i)	
+   		}
+   		function delay(notes,i){
+   		    audiorec=document.getElementById(notes);
+   		    setTimeout(playit(),1000*i)
+   		    function playit(){
+   			       audiorec.play();
+   		    }
+   		}
+   	}
+   
+   </script>
+   	
+</body>
+</html>
