@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS Image Editor</title>
+</head>
+<body>
+      <h2 class="heading">Add </h2><h1 class="heading">Color-Frame </h1><h2 class="heading">and </h2><h1 class="heading">Blur</h1>
+      <div id="controls">
+      	  <label>Spacing </label>
+      	  <input type="range" name="spacing" min="0" max="200" value="10">
+      	  <label>Blur </label>
+      	  <input type="range" name="blur" min="0" max="25" value="10">
+      	  <label>Color </label>
+      	  <input type="color" name="base" value="#07F5F9">
+      </div>
+      <img src="https://cdn.pixabay.com/photo/2016/03/29/20/40/person-1289310_960_720.jpg">
+      
+<style type="text/css">
+	:root{
+       --base: #07F5F9;
+       --spacing: 10px;
+       --blur:10px;
+	}
+	body{
+		background-color: #062542; 
+		text-align: center;
+		font-family: 'helvetica neue', sans-serif;
+	}
+    h2{
+    	display: inline;
+    	font-size: 70px;
+    	font-weight: 600;
+    	color: white;
+    }
+    h1{ 
+    	display: inline;
+    	font-size: 70px;
+    	font-weight: 600;
+    	color: var(--base);
+    }
+    
+    label{
+    	font-size: 50px;
+    	color: white;
+    	font-weight: 500;
+    }
+    #controls{
+    	margin-top: 7vh;
+    }
+    img{
+    	width: 60vw;
+    	margin-top: 7vh;
+    	background-color: var(--base);
+    	padding: var(--spacing);
+    	filter: blur(var(--blur));
+    }
+    
+</style> 
+<script type="text/javascript">
+	controls=document.querySelectorAll('#controls input');
+	function updatevariables(){
+		if(this.name=='spacing'||this.name=='blur'){
+ 				document.documentElement.style.setProperty(`--${this.name}`,`${this.value}px`);
+		}
+		else document.documentElement.style.setProperty(`--${this.name}`,`${this.value}`);
+	}
+	controls.forEach(inputs=>inputs.addEventListener('change',updatevariables));
+	controls.forEach(inputs=>inputs.addEventListener('mousemove',updatevariables));
+</script>     
+</body>
+</html>
