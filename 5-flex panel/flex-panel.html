@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>flex panel</title>
+	<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<style type="text/css">
+		html{
+			font-family: 'Amatic SC', cursive;
+			color: white;
+		}
+		body{
+			margin:0;
+			padding: 0;
+			background-color: dodgerblue;
+		}
+		#flexbox{
+			display: flex;
+			height: 100vh;
+			width: 100vw;
+		}
+		#flexbox h2{
+			font-size: 90px;
+			margin: 0;
+			padding: 0;
+			text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.top{
+			transform: translateY(-100%);
+		}
+		.backtoplace{
+			transform: translateY(0%);
+		}
+		.bottom{
+			transform: translateY(100%);
+		}
+		#flexbox h3{
+			margin: 0;
+			padding: 0;
+			font-size: 45px;
+			text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+			flex: 1 0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.normalflex{
+			text-align: center;
+			background-size: cover;
+			margin:0;
+			padding: 0;
+			background-position: center;
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			overflow: hidden;
+			transition: all 1.3s;
+			transition-timing-function: cubic-bezier(0.32, -0.95, 0.54, 1.92);
+		}
+		.biggerflex{
+			flex: 5;
+			font-size: 100px;
+		}
+	
+		#flexbox div:nth-child(1){
+			background-image: url('https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495_960_720.jpg');
+			}
+		#flexbox div:nth-child(2){
+			background-image: url('https://cdn.pixabay.com/photo/2015/03/17/14/05/sparkler-677774_960_720.jpg');	
+		}
+		#flexbox div:nth-child(3){
+			background-image: url('https://cdn.pixabay.com/photo/2020/09/10/09/46/desert-5559888_960_720.jpg');	
+		}
+		#flexbox div:nth-child(4){
+			background-image: url('https://cdn.pixabay.com/photo/2020/09/06/21/27/squirrels-5550173_960_720.jpg');	
+		}
+		#flexbox div:nth-child(5){
+			background-image: url('https://cdn.pixabay.com/photo/2017/01/28/02/24/japan-2014618_960_720.jpg');
+		}
+	</style>
+	<div id="flexbox">
+		<div class="normalflex">
+			<h3 class="top">HEY</h3>
+			<h2>LET'S</h2>
+			<h3 class="bottom">DANCE</h3>
+		</div>
+		<div class="normalflex">
+			<h3 class="top">GIVE</h3>
+			<h2>TAKE</h2>
+			<h3 class="bottom">RECEIVE</h3>
+		</div>
+		<div class="normalflex">
+			<h3 class="top">EXPERIENCE</h3>
+			<h2>IT</h2>
+			<h3 class="bottom">TODAY</h3>
+		</div>
+		<div class="normalflex">
+			<h3 class="top">GIVE</h3>
+			<h2>ALL</h2>
+			<h3 class="bottom">YOU CAN</h3>
+		</div>
+		<div class="normalflex">
+			<h3 class="top">LIFE</h3>
+			<h2>IN</h2>
+			<h3 class="bottom">MOTION</h3>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	document.querySelectorAll('#flexbox div').forEach(element=>element.addEventListener('click',toggleclass));
+	document.querySelectorAll('#flexbox div').forEach(element=>element.addEventListener('transitionend',backtoplacefunction));
+	function toggleclass(){
+		this.classList.toggle('biggerflex');
+	}
+	function backtoplacefunction(){
+		this.classList.toggle('backtoplace');
+	}
+</script>
+</body>
+</html>
