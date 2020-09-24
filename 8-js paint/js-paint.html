@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js paint</title>
+</head>
+<body>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+	<canvas id="slate"></canvas>
+	<script type="text/javascript">
+		canvas=document.querySelector('#slate');
+		canvas.width=window.innerWidth;
+		canvas.height=window.innerHeight;
+		ctx=canvas.getContext('2d');
+		var h=185;
+		
+		ctx.lineJoin='round';
+		ctx.lineCap='round';
+		ctx.lineWidth=100;
+		ctx.globalCompositeOperation='color';
+		let isdraw=false;
+		let lastx=0;
+		let lasty=0;
+		let direction=true;
+		function draw(e){
+			if(!isdraw)
+				return;
+			ctx.strokeStyle=`hsl(${h}, 100%, 50%)`;
+            ctx.beginPath();
+            ctx.moveTo(lastx,lasty);
+            ctx.lineTo(e.offsetX,e.offsetY);
+            ctx.stroke();
+            lastx=e.offsetX;
+            lasty=e.offsetY;
+            h++;
+            console.log(h);
+            direction==true?ctx.lineWidth--:ctx.lineWidth++;
+            if(ctx.lineWidth<2)
+            	direction=false;
+            if(ctx.lineWidth>99)
+            	direction=true;
+		}
+		canvas.addEventListener('mousemove',draw);
+		canvas.addEventListener('mousedown',(e)=>{isdraw=true;lastx=e.offsetX;lasty=e.offsetY});
+		canvas.addEventListener('mouseup',()=>isdraw=false);
+		canvas.addEventListener('mouseout',()=>isdraw=false);
+	</script>
+</body>
+</html>
