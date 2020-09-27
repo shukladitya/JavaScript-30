@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>shift select all</title>
+</head>
+<body>
+	<style type="text/css">
+		body{
+			background-color: dodgerblue;
+			font-family: sans-serif;
+		}
+		#listOfItems{
+			background-color: #FFFFFF;
+			max-width: 500px;
+			border-radius: 5px;
+			box-shadow: 10px 10px 50px 1px black;
+			margin: 50px auto;
+		}
+		input{
+			margin: 12px;
+		}
+		div{
+			border-bottom: 1px solid #778899;
+			padding: 9px;
+		}
+		div:last-child{
+			border-bottom: none;
+		}
+		label{ 
+			padding: 20px;
+			border-left: 2px solid red;
+			margin: 20px;
+		}
+		input:checked+label{
+			text-decoration: line-through;
+		}
+	</style>
+	<div id="listOfItems">
+		<div>
+			<input type="checkbox" name="">
+			<label> check out this item</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> check out this too</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> Press shift key</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> now choose any item from the bottom</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> You will notice</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> that all elements have been selected</label>
+		</div>
+		<div>
+			<input type="checkbox" name="">
+			<label> between the two boxes</label>
+		</div>
+	</div>
+	<script type="text/javascript">
+		chkboxes=document.querySelectorAll('input');
+		console.log(chkboxes);
+		chkboxes.forEach(item=>item.addEventListener('click',verifyselectall));
+		var flag=0;
+		function verifyselectall(e){
+			if(e.shiftKey==true)
+				{	flag=0;
+					chkboxes.forEach(boxes=>{if(boxes.checked==true)flag++});
+					if(flag>1)
+					{   var valuetogive=false;
+						chkboxes.forEach(boxes=>{
+							if(boxes.checked==true)
+								valuetogive=~valuetogive;
+							if(boxes.checked==false)
+							    boxes.checked=valuetogive
+						}
+						);
+						valuetogive=false;
+					}
+				}
+
+		} 
+	</script>
+</body>
+</html>
