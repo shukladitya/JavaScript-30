@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom Video Player</title>
+</head>
+<body>
+<style type="text/css">
+	body{
+		background-image: linear-gradient(to bottom right,#FF69B4,#663399);
+		background-size: cover;
+		margin: 0;
+		padding: 0;
+		height: 100vh;
+		padding-right: 20px;
+		padding-left: 20px;
+	}
+	#spacer{
+		height: 20vh;
+	}
+	#playerscreen{
+		width: 60%;
+		height:30vw;
+		background-color: black;
+		margin:auto;
+		box-shadow: 0 0 0px 3px #FF69B4;
+		resize: both;
+		overflow: hidden;
+		position: relative;
+	}
+	#controlls{
+		width: 100%;
+		position: absolute;
+		bottom: 5px;
+		transform: translateY(+95%);
+		transition: all 0.8s;
+	}
+	#playerscreen:hover #controlls{
+		transform: translateY(0);
+	}
+	.player__button{
+		background: none;
+		border: none;
+		margin-right: 3px;
+		margin-left: 3px; 
+		color: white;
+		cursor: pointer;
+		transition: all 0.1s;
+		border-radius: 3px;
+		font-size: 20px;
+	}
+	.player__button:hover {
+        border:2px solid #FF69B4;
+    }
+    #progressbar{
+    	background-color: hsla(281,100%,50%,.2);
+    	height: 15px;
+    	width: 100%;
+    	box-sizing: border-box;
+    	cursor: ew-resize;
+    	margin-bottom: 6px;
+    }
+    #videoprogress{
+    	width: 50%;
+    	height: 100%;
+    	background-image: linear-gradient(to bottom right,#FF69B4,#663399);
+    }
+    button[data-skip="25"]{
+    	float: right;
+    }
+    button[data-skip="-10"]{
+    	float: right;
+    }
+    video{
+    	width: 100%;
+    	height: 100%;
+    }
+    
+</style>	
+    <div id="spacer"></div>
+	<div id='playerscreen'>
+		<video><source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4"></video>
+		    <div id="controlls">
+			   <div id="progressbar">
+			      <div id="videoprogress"></div>
+			   </div>
+			   <button id="playbutton" class="player__button toggle" title="Toggle Play">►</button>
+               <input type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" value="1">
+               <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
+			   <button data-skip="25" class="player__button">25s »</button>
+			   <button data-skip="-10" class="player__button">« 10s</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		const player=document.querySelector('#playerscreen');
+		const video=document.querySelector('video');
+		const playbutton=document.querySelector("#playbutton");
+		const skipbuttons=document.querySelectorAll('[data-skip]');
+		const sliders=document.querySelectorAll('.player__slider');
+		var progressbar=document.querySelector('#videoprogress');
+		var progressbed=document.querySelector('#progressbar');
+		function toggleplay(){
+			if(video.paused){
+				video.play();
+				playbutton.innerHTML="❚❚";
+			}
+			else {
+				video.pause();
+				playbutton.innerHTML="►";
+			}
+		}
+		function skipping(){
+			video.currentTime+=parseFloat(this.dataset.skip);
+		}
+		function updaterange(){
+			video[this.name]=this.value;
+
+		}
+		function handleprogress(){
+			var percentage=(video.currentTime/video.duration)*100;
+				progressbar.style.width=`${percentage}%`;
+		}
+		function scrollprogress(e){
+			if(flag==false) return;
+			var percent=(e.offsetX/progressbed.offsetWidth)*100;
+			video.currentTime=(percent/100)*video.duration;
+		}
+		function scrollprogressclick(e){
+			var percent=(e.offsetX/progressbed.offsetWidth)*100;
+			video.currentTime=(percent/100)*video.duration;
+		}
+		playbutton.addEventListener('click',toggleplay);
+		video.addEventListener('click',toggleplay);
+		video.addEventListener('timeupdate',handleprogress);
+		skipbuttons.forEach(item=>item.addEventListener('click',skipping));
+		sliders.forEach(item=>item.addEventListener('click',updaterange));
+		var flag=false;
+		progressbed.addEventListener('click',scrollprogressclick);
+		progressbed.addEventListener('mousemove',scrollprogress);
+		progressbed.addEventListener('mousedown',()=>{flag=true});
+		progressbed.addEventListener('mouseup',()=>{flag=false});
+	</script>
+ 	
+</body>
+</html>
