@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie WatchList</title>
+</head>
+<body>
+<style type="text/css">
+	html{
+		height: 100vh;
+		background-image:url('background.jpg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		font-family: sans-serif;
+		margin: 0;
+		padding: 0;
+		padding-top: 50px;
+	}
+	#logo{
+		width: 300px;
+		height: 300px;
+		background-image: url('logo.png');
+		background-repeat: no-repeat;
+		position: relative;
+		left: 36px;
+		top: 10px;
+	}
+	#logo::after{
+		content: "Movie Watch List";
+		position: relative;
+		top:148px;
+		left: -3px;
+		color: black;
+		font-size: 18px;
+		font-weight: 900;
+	}
+	#logoBackground{
+		width: 230px;
+		height: 230px;
+		background-color: white;
+		opacity: 0.5;
+		border-radius: 50%;
+		margin: auto;
+	}
+	#userInput{
+		background-color: white;
+		opacity: .9;
+		padding: 20px;
+		width: 300px;
+		margin:40px auto;
+		box-shadow: 0 0 0 10px rgba(360, 360, 360, 0.5);
+	}
+	#userInput h2{
+		text-align: center;
+	}
+	ul{
+		list-style: none;
+		text-align: left;
+		padding-left: 0;
+	}
+	#rular{
+		height: 1px;
+		background-color: gray;
+		margin-bottom: 10px;
+	}
+	input[type="text"] {
+		width: 63%;
+		height: 32px;
+		border-radius: 0;
+		border:solid 1px gray;
+		font-size: 1.2em;
+		padding-left: 10px;
+	}
+	button{
+		width:29%;
+		height: 36px;
+		border:solid 1px gray;
+		border-radius: 0;
+	}
+	input[type='checkbox']{
+		display: none;
+	}
+	label{
+		font-weight: bold;
+	}
+	label::before{
+		content:"⬜️";
+		position: relative;
+		right: 2px;
+	}
+	input[type='checkbox']:checked+label::before{
+		content:"🎥";
+		position: relative;
+		right: 2px;
+	}
+</style>
+	<div id="logoBackground">
+		<div id="logo"></div>
+	</div>
+	<div id="userInput">
+		<h2>ADD MOVIES</h2>
+		<ul>
+			<li>Loading Movies...</li>
+		</ul>
+		<div id="rular"></div>
+		<form autocomplete="on">
+			<input type="text" name="" placeholder="Movie Name" required>
+			<button type="submit">+Add movie</button>
+		</form>
+	</div>
+<script type="text/javascript">
+	const wholeform=document.querySelector('form');
+	wholeform.addEventListener('submit',addItem);
+	let movielist=JSON.parse(localStorage.getItem('movielist'))||[];
+		if(movielist[0]!=null)
+			printonscreen();
+	function addItem(e){
+		e.preventDefault();
+		text=this.querySelector('input[type="text"]').value;
+		movielist.push(text);
+		localStorage.setItem('movielist',JSON.stringify(movielist));
+		printonscreen();
+		wholeform.reset();
+	}
+	function printonscreen(){
+		document.querySelector('ul').innerHTML=movielist.map((element,i)=>
+			`<li><input type='checkbox' id='${i}'></input>
+			<label for='${i}'>${element}</label></li>`).join('');
+	}	
+</script>	
+</body>
+</html>
