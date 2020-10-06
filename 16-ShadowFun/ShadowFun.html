@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shadow Fun</title>
+</head>
+<body>
+<style type="text/css">
+	html{
+		font-family: sans-serif;
+	}
+	body{
+		margin: 0;
+		padding: 0;
+	}
+    div{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	height: 100vh;
+    	margin: 0;
+    	padding: 0;
+    }
+	#shadow{
+		font-size: 120px;
+		font-weight: 700;
+		text-shadow: 2px 20px 2px red;
+	}
+</style>
+	<div id="shadow" contenteditable="">
+		👻 GHOST !
+	</div>
+<script type="text/javascript">
+	let hero=document.querySelector('#shadow');
+	hero.addEventListener('mousemove',addShadow);
+	function addShadow(e){
+		let elementcenterY=e.offsetY-(hero.offsetTop+(hero.offsetHeight/2));
+		let elementcenterX=e.offsetX-(hero.offsetLeft+(hero.offsetWidth/2));
+		console.log(elementcenterX,elementcenterY);
+		hero.style.textShadow=`${elementcenterX+50}px ${elementcenterY-70}px 0 rgba(40,150,226,0.8),${-elementcenterX+30}px ${elementcenterY}px 0 rgba(240,565,126,0.8),${elementcenterX+45}px ${-elementcenterY-90}px 0 rgba(240,6,226,0.8),${-elementcenterX+22}px ${-elementcenterY-45}px 0 rgba(100,200,226,0.8)`;
+		}
+</script>	
+</body>
+</html>
