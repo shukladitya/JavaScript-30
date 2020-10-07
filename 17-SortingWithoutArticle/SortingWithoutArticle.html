@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sorting withoutt article</title>
+</head>
+<body>
+<style type="text/css">
+	body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: center;
+    }
+    ul{
+    	background-color: white;
+    	font-size: 30px;
+    }
+</style>
+	<ul id="bands">
+		
+	</ul>
+<script type="text/javascript">
+	const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+	let todisplay=bands.sort((ele1,ele2)=>{
+		word1=ele1.split(' ');
+		word2=ele2.split(' ');
+		word1=word1.filter(ele=>{if(ele!='A'&&ele!='An'&&ele!='The')
+	                             return ele});
+		word2=word2.filter(ele=>{if(ele!='A'&&ele!='An'&&ele!='The')
+	                             return ele});
+		if(word1[0][0]>word2[0][0])
+			return 1;
+		else return -1;
+    });
+    document.querySelector('#bands').innerHTML=todisplay.map(ele=>`<li>${ele}</li>`);
+
+</script>
+</body>
+</html>
