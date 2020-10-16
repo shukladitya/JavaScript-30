@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>webcam fun</title>
+</head>
+<body>
+<style type="text/css">
+	body{
+		margin: 0;
+	}
+	#photobooth{
+		background-color: lightgreen;
+	}
+	canvas{
+		width: 100%;
+		height: 100%;
+	}
+	video{
+		position:absolute;
+		right: 20px;
+		top:20px;
+		width: 350px;
+		height: 250px;
+		border:5px solid white;
+	}
+	#strip{
+		background-color: lightgreen;
+    	position: sticky;
+   	 	bottom: 0;
+    	
+    	z-index: 5;
+    	left: 0;
+    	width: 100%;
+	}
+	#strip img{
+		height: 50px;
+		width: 70px;
+		border-left: 5px solid white;
+		border-right: 5px solid white;
+		border-top: 5px solid white;
+		border-bottom: 17px solid white;
+		margin: 20px;
+	}
+</style>
+	<div id="photobooth">
+		<div id="controls">
+			<button onclick="getvideo();">
+				Start Photbooth
+			</button>
+			<button onclick="takephoto();">
+				Take Snap
+			</button>
+		</div>
+		<canvas>
+			
+		</canvas>
+		<div id="strip"></div>
+		<video autoplay></video>
+	</div>
+	<audio src="snap.mp3" hidden></audio>
+<script type="text/javascript">
+	video=document.querySelector('video');
+	canvas=document.querySelector('canvas');
+	audio=document.querySelector('audio');
+	ctx=canvas.getContext('2d');
+	strip=document.querySelector('#strip');
+	function getvideo(){
+		navigator.mediaDevices.getUserMedia({
+			video:true,audio:false
+		})
+		.then(localMediaStream=>{
+			video.srcObject=localMediaStream;
+		}).catch(e=>{window.alert(`Please allow camera, how else are you expecting photobooth to take your picture?\n${e}`);});
+		
+	}
+	function painttocanvas(){
+		width=video.videoWidth;
+		height=video.videoHeight;
+		canvas.width=width;
+		canvas.height=height;
+		setInterval(()=>{
+			ctx.drawImage(video,0,0,width,height);
+		let pixels=ctx.getImageData(0,0,width,height);
+		console.log(pixels);
+						},100);
+
+	}
+	video.addEventListener('canplay',painttocanvas);
+	function takephoto(){
+		audio.currentTime=0;
+		audio.play();
+		const data=canvas.toDataURL('images/jpeg');
+		const link=document.createElement('a');
+		link.href=data;
+		link.setAttribute('download','photobooth_image');
+		link.innerHTML=`<img src='${data}' />`;
+		strip.appendChild(link);
+	}
+	
+</script>
+</body>
+</html>
