@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Speech Recognition</title>
+	<link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dawning+of+a+New+Day&display=swap" rel="stylesheet">
+</head>
+<body>
+<style type="text/css">
+	body{
+		background-color: lightgreen;
+	}
+	#page{
+		font-size: 40px;
+		background-color: white;
+		width: 60%;
+		margin: 100px auto;
+		border-radius:5px;
+		padding-left:90px;
+		padding-right: 5px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+		position: relative;
+		font-family: 'Tangerine', cursive;
+	}
+	.assignment{
+		font-size: 30px;
+		background-image: url('page.jpg');
+		background-size: 100%;
+		background-position: top;
+		margin: 100px auto;
+		font-family: 'Dawning of a New Day', cursive;
+	}
+	p{
+		margin-left: 30px;
+	}
+	#page::before{
+		position: absolute;
+		top:0;
+		bottom: 0;
+		left: 50px;
+		content: "";
+		width:4px;
+		background-color: transparent;
+		border-right:1px solid gray;
+		border-left:1px solid gray;
+	}
+</style>
+	<div id="page" contenteditable></div>
+<script type="text/javascript">
+	
+	window.SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+	let recognition=new SpeechRecognition;
+	recognition.interimResults=true;
+	
+	
+
+	const page=document.querySelector('#page');
+	let para=document.createElement('p');
+	page.appendChild(para);
+	
+	recognition.addEventListener('result',e=>{
+		const wordsspoken=Array.from(e.results)
+						.map(item=>item[0])
+						.map(item=>item.transcript)
+						.join('');
+		para.textContent=wordsspoken;
+		if(e.results[0].isFinal){
+						para=document.createElement('p');
+						page.appendChild(para);
+		                     }			
+		if(wordsspoken.includes('assignment'||'Assignment')){
+									console.log("OK!Assignment Mode")
+									page.classList.add("assignment");
+									page.style.fontFamily = "Dawning of a New Day";
+									page.style.fontSize="30px";
+								}
+		});
+	
+	recognition.addEventListener('end',recognition.start);
+	
+	recognition.start();
+</script>
+</body>
+</html>
